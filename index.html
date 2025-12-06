@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SPICYSMP | Premium Minecraft Store</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        /* --- VARIABLES & RESET --- */
+        :root {
+            --magenta: #ff00cc;
+            --gold: #ffd700;
+            --dark-bg: #050508;
+            --card-bg: #121216;
+            --text-color: #ffffff;
+            --text-gray: #b3b3b3;
+            --gradient-main: linear-gradient(135deg, var(--magenta), var(--gold));
+            --glow: 0 0 15px rgba(255, 0, 204, 0.4);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: var(--dark-bg);
+            color: var(--text-color);
+            overflow-x: hidden;
+        }
+
+        a { text-decoration: none; color: white; transition: 0.3s; }
+        ul { list-style: none; }
+
+        /* --- UTILITIES --- */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .gradient-text {
+            background: var(--gradient-main);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 800;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background: var(--gradient-main);
+            color: #000;
+            box-shadow: var(--glow);
+            border: none;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 25px rgba(255, 215, 0, 0.6);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border: 2px solid var(--gold);
+            color: var(--gold);
+        }
+
+        .btn-secondary:hover {
+            background: var(--gold);
+            color: #000;
+        }
+
+        /* --- NAVBAR --- */
+        nav {
+            padding: 20px 0;
+            background: rgba(5, 5, 8, 0.95);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 215, 0, 0.1);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo i { color: var(--gold); }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .hamburger {
+            display: none;
+            font-size: 1.5rem;
+            color: var(--gold);
+            cursor: pointer;
+        }
+
+        /* Mobile Menu */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none; /* Hidden by default on mobile */
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: var(--card-bg);
+                padding: 20px;
+                text-align: center;
+                border-bottom: 2px solid var(--magenta);
+            }
+            .nav-links.active {
+                display: flex;
+            }
+            .hamburger { display: block; }
+        }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: linear-gradient(rgba(5, 5, 8, 0.7), rgba(5, 5, 8, 1)), 
+                        url('https://images.unsplash.com/photo-1587573089734-09cb69c0f2b4?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80'); 
+            background-size: cover;
+            background-position: center;
+            padding: 20px;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+        }
+
+        .hero p {
+            color: var(--text-gray);
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            max-width: 600px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        /* --- FEATURES BAR --- */
+        .features {
+            padding: 30px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .features-grid {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .feature-item {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 10px 20px;
+            border-radius: 50px;
+            border: 1px solid rgba(255, 0, 204, 0.2);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.9rem;
+            color: var(--text-gray);
+        }
+
+        .feature-item i { color: var(--gold); }
+
+        /* --- CATEGORIES --- */
+        .categories {
+            padding: 60px 0;
+            text-align: center;
+        }
+
+        .section-title {
+            margin-bottom: 10px;
+            font-size: 2rem;
+        }
+
+        .section-subtitle {
+            color: var(--text-gray);
+            margin-bottom: 40px;
+            display: block;
+        }
+
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            position: relative;
+            transition: 0.3s;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .card:hover {
+            border-color: var(--gold);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .card-icon {
+            font-size: 3rem;
+            background: var(--gradient-main);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .card h3 { font-size: 1.5rem; }
+
+        .view-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(255, 215, 0, 0.1);
+            color: var(--gold);
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.8rem;
+        }
+
+        /* --- FOOTER CTA --- */
+        .footer-cta {
+            background: rgba(20, 20, 25, 0.6);
+            margin: 40px auto;
+            padding: 40px;
+            border-radius: 20px;
+            border: 1px solid var(--magenta);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .footer-cta::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(circle at center, rgba(255, 0, 204, 0.1), transparent 70%);
+            pointer-events: none;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            background: #000;
+            padding: 50px 0 20px;
+            border-top: 1px solid rgba(255, 215, 0, 0.2);
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-col h4 {
+            color: var(--magenta);
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-col ul li a {
+            color: var(--text-gray);
+        }
+
+        .footer-col ul li a:hover {
+            color: var(--gold);
+            padding-left: 5px;
+        }
+
+        .server-ip-box {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 10px;
+            border-radius: 5px;
+            display: inline-block;
+            color: var(--gold);
+            font-family: monospace;
+            cursor: pointer;
+        }
+
+        .copyright {
+            text-align: center;
+            color: var(--text-gray);
+            font-size: 0.9rem;
+            margin-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding-top: 20px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="container nav-container">
+            <a href="index.html" class="logo">
+                <i class="fas fa-cube"></i> 
+                <span class="gradient-text">SPICYSMP</span>
+            </a>
+            <div class="hamburger" onclick="toggleMenu()">
+                <i class="fas fa-bars"></i>
+            </div>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="store.html">Store</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="https://discord.gg/bBNsdzVfdB" class="btn btn-primary" style="padding: 8px 20px; font-size: 0.9rem;">Join Discord</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="container">
+            <h1 class="gradient-text">SPICYSMP</h1>
+            <p>Your ultimate destination for premium Minecraft items. Join thousands of satisfied players on the server!</p>
+            <div class="hero-buttons">
+                <a href="store.html" class="btn btn-primary">Browse Store <i class="fas fa-arrow-right"></i></a>
+                <a href="https://discord.gg/bBNsdzVfdB" class="btn btn-secondary">Join Discord</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="features">
+        <div class="container features-grid">
+            <div class="feature-item">
+                <i class="fas fa-bolt"></i> Instant Delivery
+            </div>
+            <div class="feature-item">
+                <i class="fas fa-shield-alt"></i> Secure Purchases
+            </div>
+            <div class="feature-item">
+                <i class="fas fa-headset"></i> 24/7 Support
+            </div>
+        </div>
+    </section>
+
+    <section class="categories">
+        <div class="container">
+            <h2 class="section-title"><span class="gradient-text">Shop by Category</span></h2>
+            <span class="section-subtitle">Explore our wide range of premium items</span>
+
+            <div class="category-grid">
+                
+                <div class="card">
+                    <span class="view-badge">View</span>
+                    <div class="card-icon"><i class="fas fa-crown"></i></div>
+                    <h3>Ranks</h3>
+                    <a href="rank.html" class="btn btn-secondary" style="width: 100%">Buy Now</a>
+                </div>
+
+                <div class="card">
+                    <span class="view-badge">View</span>
+                    <div class="card-icon"><i class="fas fa-box-open"></i></div>
+                    <h3>Crate Keys</h3>
+                    <a href="crate.html" class="btn btn-secondary" style="width: 100%">Buy Now</a>
+                </div>
+
+                <div class="card">
+                    <span class="view-badge">Rewards</span>
+                    <div class="card-icon"><i class="fas fa-check-to-slot"></i></div>
+                    <h3>Vote</h3>
+                    <a href="https://minecraft-mp.com/server-s351315" target="_blank" class="btn btn-secondary" style="width: 100%">Vote Now</a>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-cta">
+                <h2 style="margin-bottom: 10px; color:white;">Ready to Upgrade Your <span class="gradient-text">Experience?</span></h2>
+                <p style="color: #b3b3b3; margin-bottom: 20px;">Join our community and get access to exclusive items and features.</p>
+                <a href="store.html" class="btn btn-primary">Visit Store Now <i class="fas fa-arrow-right"></i></a>
+            </div>
+
+            <div class="footer-content">
+                <div class="footer-col">
+                    <h4 class="gradient-text">SPICYSMP</h4>
+                    <p style="color: #888;">The official Minecraft SMP store. Join our community and get premium items!</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="https://discord.gg/bBNsdzVfdB">Discord Server</a></li>
+                        <li><a href="#">Support Tickets</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Server Info</h4>
+                    <p style="color:#888; margin-bottom:5px;">Server IP:</p>
+                    <div class="server-ip-box" onclick="navigator.clipboard.writeText('play.spicynet.fun'); alert('IP Copied!')">
+                        play.spicynet.fun
+                    </div>
+                </div>
+            </div>
+            <div class="copyright">
+                Made with <i class="fas fa-heart" style="color: var(--magenta);"></i> by SHADOW &copy; 2025 SPICYSMP
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function toggleMenu() {
+            const navLinks = document.getElementById('navLinks');
+            navLinks.classList.toggle('active');
+        }
+    </script>
+</body>
+</html>
