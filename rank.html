@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ranks | SPICYSMP</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <style>
+        /* --- GLOBAL STYLES --- */
+        :root {
+            --magenta: #ff00cc;
+            --gold: #ffd700;
+            --dark-bg: #050508;
+            --card-bg: #121216;
+            --text-color: #ffffff;
+            --text-gray: #b3b3b3;
+            --gradient-main: linear-gradient(135deg, var(--magenta), var(--gold));
+            --price-tag-bg: rgba(0, 255, 255, 0.1); 
+            --price-tag-text: #00ffff;
+            --buy-btn-gradient: linear-gradient(90deg, #00c6ff, #0072ff);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        body { background-color: var(--dark-bg); color: var(--text-color); }
+        a { text-decoration: none; color: white; transition: 0.3s; }
+        ul { list-style: none; }
+        
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        .gradient-text { background: var(--gradient-main); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 800; }
+
+        /* --- NAVBAR --- */
+        nav { padding: 20px 0; background: rgba(5, 5, 8, 0.95); position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid rgba(255, 215, 0, 0.1); }
+        .nav-container { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.5rem; display: flex; align-items: center; gap: 10px; }
+        .logo i { color: var(--gold); }
+        
+        .nav-links { display: flex; gap: 20px; align-items: center; }
+        .btn-primary { background: var(--gradient-main); color: #000; padding: 8px 20px; border-radius: 8px; font-weight: 600; }
+        .hamburger { display: none; font-size: 1.5rem; color: var(--gold); cursor: pointer; }
+
+        /* --- MOBILE MENU CSS --- */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: var(--card-bg);
+                padding: 20px;
+                text-align: center;
+                border-bottom: 2px solid var(--magenta);
+                gap: 20px;
+            }
+            .nav-links.active { display: flex; }
+            .hamburger { display: block; }
+        }
+
+        /* --- RANK PAGE HEADER --- */
+        .page-header {
+            text-align: center;
+            padding: 60px 20px 40px;
+            background: radial-gradient(circle at center, rgba(255,0,204,0.1), transparent 70%);
+        }
+        .page-header h1 { font-size: 3rem; margin-bottom: 10px; }
+        .page-header p { color: var(--text-gray); }
+
+        /* --- RANK CARDS --- */
+        .rank-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            padding-bottom: 80px;
+        }
+
+        .rank-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: 0.3s;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .rank-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--gold);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .rank-banner {
+            height: 180px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        .wishlist-icon {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: rgba(0,0,0,0.5);
+            padding: 8px;
+            border-radius: 50%;
+            color: #fff;
+            font-size: 1rem;
+        }
+
+        .rank-content { padding: 20px; flex-grow: 1; display: flex; flex-direction: column; }
+        .rank-title { font-size: 1.4rem; font-weight: 700; color: white; margin-bottom: 10px; text-transform: uppercase; }
+        .rank-desc { color: var(--text-gray); font-size: 0.9rem; line-height: 1.5; margin-bottom: 20px; flex-grow: 1; }
+
+        .rank-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: auto;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            padding-top: 15px;
+        }
+
+        .price-box { display: flex; flex-direction: column; }
+        .old-price { text-decoration: line-through; color: #666; font-size: 0.85rem; margin-bottom: 2px; }
+        .new-price-tag { background: var(--price-tag-bg); color: var(--price-tag-text); padding: 5px 10px; border-radius: 5px; font-weight: 700; font-size: 1rem; display: inline-block; }
+
+        .buy-now-btn {
+            background: var(--buy-btn-gradient);
+            color: white;
+            padding: 10px 25px;
+            border-radius: 5px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(0, 198, 255, 0.3);
+            transition: 0.2s;
+        }
+        .buy-now-btn:hover { box-shadow: 0 0 20px rgba(0, 198, 255, 0.6); transform: scale(1.05); }
+
+        footer { background: #000; padding: 40px 0; border-top: 1px solid rgba(255,255,255,0.1); text-align: center; color: #666; font-size: 0.9rem; }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="container nav-container">
+            <a href="index.html" class="logo">
+                <i class="fas fa-cube"></i> 
+                <span class="gradient-text">SPICYSMP</span>
+            </a>
+            
+            <div class="nav-links" id="navLinks">
+                <a href="index.html">Home</a>
+                <a href="store.html" style="color: var(--gold);">Store</a>
+                <a href="contact.html">Contact</a>
+                <a href="https://discord.gg/yourinvite" class="btn-primary">Join Discord</a>
+            </div>
+
+            <div class="hamburger" onclick="toggleMenu()">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </nav>
+
+    <div class="page-header">
+        <h1 class="gradient-text">Select Your Rank</h1>
+        <p>Unlock exclusive perks, kits, and abilities on SPICYSMP</p>
+    </div>
+
+    <div class="container rank-grid">
+
+        <div class="rank-card">
+            <div class="rank-banner" style="background-image: url('pro.jpg');">
+                <i class="far fa-heart wishlist-icon"></i>
+            </div>
+            <div class="rank-content">
+                <div class="rank-title">PRO RANK</div>
+                <div class="rank-desc">
+                    Start your journey with the PRO status. Includes the exclusive <strong>PRO Kit</strong> and essential commands.
+                </div>
+                <div class="rank-footer">
+                    <div class="price-box">
+                        <span class="old-price">₹49</span>
+                        <span class="new-price-tag">₹29</span>
+                    </div>
+                    <a href="pro.html" class="buy-now-btn">Buy Now</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="rank-card">
+            <div class="rank-banner" style="background-image: url('elite.jpg');">
+                <i class="far fa-heart wishlist-icon"></i>
+            </div>
+            <div class="rank-content">
+                <div class="rank-title">ELITE RANK</div>
+                <div class="rank-desc">
+                    Step up your game. Comes with the <strong>ELITE Kit</strong>, colored chat, and more homes.
+                </div>
+                <div class="rank-footer">
+                    <div class="price-box">
+                        <span class="old-price">₹89</span>
+                        <span class="new-price-tag">₹49</span>
+                    </div>
+                    <a href="elite.html" class="buy-now-btn">Buy Now</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="rank-card">
+            <div class="rank-banner" style="background-image: url('legend.jpg');">
+                <i class="far fa-heart wishlist-icon"></i>
+            </div>
+            <div class="rank-content">
+                <div class="rank-title">LEGEND RANK</div>
+                <div class="rank-desc">
+                    Become a legend. Unlocks the powerful <strong>LEGEND Kit</strong> and priority queue access.
+                </div>
+                <div class="rank-footer">
+                    <div class="price-box">
+                        <span class="old-price">₹129</span>
+                        <span class="new-price-tag">₹79</span>
+                    </div>
+                    <a href="legend.html" class="buy-now-btn">Buy Now</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="rank-card">
+            <div class="rank-banner" style="background-image: url('deadliest.jpg');">
+                <i class="far fa-heart wishlist-icon"></i>
+            </div>
+            <div class="rank-content">
+                <div class="rank-title" style="color: #ff3333;">DEADLIEST RANK</div>
+                <div class="rank-desc">
+                    Unleash your true potential! Gain access to the <strong>DEADLIEST Kit</strong> and special combat perks.
+                </div>
+                <div class="rank-footer">
+                    <div class="price-box">
+                        <span class="old-price">₹159</span>
+                        <span class="new-price-tag">₹99</span>
+                    </div>
+                    <a href="deadliest.html" class="buy-now-btn">Buy Now</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="rank-card">
+            <div class="rank-banner" style="background-image: url('immortal.jpg');">
+                <i class="far fa-heart wishlist-icon"></i>
+            </div>
+            <div class="rank-content">
+                <div class="rank-title" style="color: var(--gold);">IMMORTAL RANK</div>
+                <div class="rank-desc">
+                    Unlock the power of eternity. Enjoy the <strong>IMMORTAL Kit</strong>, flight in lobby, and unique titles.
+                </div>
+                <div class="rank-footer">
+                    <div class="price-box">
+                        <span class="old-price">₹199</span>
+                        <span class="new-price-tag">₹119</span>
+                    </div>
+                    <a href="immortal.html" class="buy-now-btn">Buy Now</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="rank-card">
+            <div class="rank-banner" style="background-image: url('supreme.jpg');">
+                <i class="far fa-heart wishlist-icon"></i>
+            </div>
+            <div class="rank-content">
+                <div class="rank-title" style="background: linear-gradient(to right, #ff00cc, #3333ff); -webkit-background-clip: text; color: transparent;">SUPREME RANK</div>
+                <div class="rank-desc">
+                    The ultimate status. Dominate with the <strong>SUPREME Kit</strong> and maximum claim blocks.
+                </div>
+                <div class="rank-footer">
+                    <div class="price-box">
+                        <span class="old-price">₹249</span>
+                        <span class="new-price-tag">₹149</span>
+                    </div>
+                    <a href="supreme.html" class="buy-now-btn">Buy Now</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="rank-card" style="border: 2px solid #ff0000; box-shadow: 0 0 15px rgba(255,0,0,0.2);">
+            <div class="rank-banner" style="background-image: url('admin.jpg');">
+                <i class="far fa-heart wishlist-icon"></i>
+            </div>
+            <div class="rank-content">
+                <div class="rank-title" style="color: #ff0000;">ADMIN RANK</div>
+                <div class="rank-desc">
+                    <strong>CAUTION:</strong> Grants CREATIVE mode access. Only for trusted players who want to build without limits.
+                </div>
+                <div class="rank-footer">
+                    <div class="price-box">
+                        <span class="old-price">₹1499</span>
+                        <span class="new-price-tag">₹999</span>
+                    </div>
+                    <a href="admin.html" class="buy-now-btn" style="background: red;">Buy Now</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        <div class="container">
+            Made with <i class="fas fa-heart" style="color: var(--magenta);"></i> by SHADOW &copy; 2025 SPICYSMP
+            <br>
+            <small style="color: #444; margin-top: 10px; display: block;">Server IP: play.spicynet.fun</small>
+        </div>
+    </footer>
+
+    <script>
+        function toggleMenu() {
+            const navLinks = document.getElementById('navLinks');
+            navLinks.classList.toggle('active');
+        }
+    </script>
+
+</body>
+</html>
