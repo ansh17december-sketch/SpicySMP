@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Support | SPICYSMP</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <style>
+        /* --- GLOBAL VARIABLES --- */
+        :root {
+            --magenta: #ff00cc;
+            --gold: #ffd700;
+            --dark-bg: #050508;
+            --card-bg: #121216;
+            --text-color: #ffffff;
+            --text-gray: #b3b3b3;
+            --gradient-main: linear-gradient(135deg, var(--magenta), var(--gold));
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        body { background-color: var(--dark-bg); color: var(--text-color); display: flex; flex-direction: column; min-height: 100vh; }
+        a { text-decoration: none; color: white; transition: 0.3s; }
+        ul { list-style: none; }
+        
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        .gradient-text { background: var(--gradient-main); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 800; }
+
+        /* --- NAVBAR --- */
+        nav { padding: 20px 0; background: rgba(5, 5, 8, 0.95); position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid rgba(255, 215, 0, 0.1); }
+        .nav-container { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.5rem; display: flex; align-items: center; gap: 10px; }
+        .logo i { color: var(--gold); }
+        .nav-links { display: flex; gap: 20px; align-items: center; }
+        .btn-primary { background: var(--gradient-main); color: #000; padding: 8px 20px; border-radius: 8px; font-weight: 600; cursor: pointer; border:none; }
+        
+        /* HAMBURGER MENU */
+        .hamburger { display: none; font-size: 1.5rem; color: var(--gold); cursor: pointer; }
+
+        @media (max-width: 768px) {
+            .nav-links { 
+                display: none; 
+                flex-direction: column; 
+                position: absolute; 
+                top: 100%; 
+                left: 0; 
+                width: 100%; 
+                background: var(--card-bg); 
+                padding: 20px; 
+                text-align: center; 
+                border-bottom: 2px solid var(--magenta); 
+                gap: 20px; 
+            }
+            .nav-links.active { display: flex; }
+            .hamburger { display: block; }
+        }
+
+        /* --- CONTACT SECTION --- */
+        .contact-section {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 60px 20px;
+        }
+
+        .contact-container {
+            max-width: 800px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .page-title { font-size: 3rem; margin-bottom: 10px; }
+        .page-subtitle { color: #888; margin-bottom: 50px; font-size: 1.1rem; }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .contact-card {
+            background: var(--card-bg);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 40px 30px;
+            border-radius: 15px;
+            transition: 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .contact-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--gold);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .icon-box {
+            font-size: 3rem;
+            margin-bottom: 10px;
+        }
+
+        .card-title { font-size: 1.5rem; font-weight: 700; color: white; }
+        
+        .card-desc { 
+            color: #b3b3b3; 
+            font-size: 0.95rem; 
+            line-height: 1.6; 
+            margin-bottom: 20px; 
+        }
+
+        .contact-btn {
+            padding: 10px 30px;
+            border-radius: 50px;
+            font-weight: 600;
+            width: 100%;
+            display: inline-block;
+            transition: 0.2s;
+        }
+
+        /* Discord Button Style */
+        .btn-discord {
+            background: #5865F2;
+            color: white;
+        }
+        .btn-discord:hover { background: #4752C4; box-shadow: 0 0 15px rgba(88, 101, 242, 0.4); }
+
+        /* Email Button Style */
+        .btn-email {
+            background: transparent;
+            border: 2px solid var(--magenta);
+            color: var(--magenta);
+        }
+        .btn-email:hover { background: var(--magenta); color: white; box-shadow: 0 0 15px rgba(255, 0, 204, 0.4); }
+
+        /* --- FOOTER --- */
+        footer { background: #000; padding: 40px 0; border-top: 1px solid rgba(255,255,255,0.1); text-align: center; color: #666; font-size: 0.9rem; margin-top: auto; }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="container nav-container">
+            <a href="index.html" class="logo">
+                <i class="fas fa-cube"></i> 
+                <span class="gradient-text">SPICYSMP</span>
+            </a>
+            
+            <div class="nav-links" id="navLinks">
+                <a href="index.html">Home</a>
+                <a href="store.html">Store</a>
+                <a href="contact.html" style="color: var(--gold);">Contact</a>
+                <a href="https://discord.gg/3yWnxcUJPN" class="btn-primary">Join Discord</a>
+            </div>
+            
+            <div class="hamburger" onclick="toggleMenu()"><i class="fas fa-bars"></i></div>
+        </div>
+    </nav>
+
+    <div class="contact-section">
+        <div class="contact-container">
+            <h1 class="page-title gradient-text">Get in Touch</h1>
+            <p class="page-subtitle">We are here to help! Choose a method below.</p>
+
+            <div class="contact-grid">
+                
+                <div class="contact-card">
+                    <div class="icon-box" style="color: #5865F2;">
+                        <i class="fab fa-discord"></i>
+                    </div>
+                    <h3 class="card-title">Discord Support</h3>
+                    <p class="card-desc">
+                        For more support, go to our Discord server and create a <strong>support ticket</strong>. This is the fastest way to get help.
+                    </p>
+                    <a href="https://discord.gg/3yWnxcUJPN" target="_blank" class="contact-btn btn-discord">
+                        Join & Open Ticket
+                    </a>
+                </div>
+
+                <div class="contact-card">
+                    <div class="icon-box" style="color: var(--magenta);">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <h3 class="card-title">Email Us</h3>
+                    <p class="card-desc">
+                        Prefer email? Send us a message directly. We typically respond within 24-48 hours.
+                        <br>
+                        <strong style="color:white;">spicyboy0201@gmail.com</strong>
+                    </p>
+                    <a href="mailto:spicyboy0201@gmail.com" class="contact-btn btn-email">
+                        Send Email
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            Made with <i class="fas fa-heart" style="color: var(--magenta);"></i> by PagalAWM &copy; 2025 SPICYSMP
+            <br>
+            <small style="color: #444; margin-top: 10px; display: block;">Server IP: play.spicynet.fun</small>
+        </div>
+    </footer>
+
+    <script>
+        function toggleMenu() {
+            const navLinks = document.getElementById('navLinks');
+            navLinks.classList.toggle('active');
+        }
+    </script>
+
+</body>
+</html>
