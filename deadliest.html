@@ -36,10 +36,24 @@
         .logo i { color: var(--gold); }
         .nav-links { display: flex; gap: 20px; align-items: center; }
         .btn-primary { background: var(--gradient-main); color: #000; padding: 8px 20px; border-radius: 8px; font-weight: 600; cursor: pointer; border:none; }
+        
+        /* HAMBURGER MENU STYLES */
         .hamburger { display: none; font-size: 1.5rem; color: var(--gold); cursor: pointer; }
 
         @media (max-width: 768px) {
-            .nav-links { display: none; flex-direction: column; position: absolute; top: 100%; left: 0; width: 100%; background: var(--card-bg); padding: 20px; text-align: center; border-bottom: 2px solid var(--magenta); gap: 20px; }
+            .nav-links { 
+                display: none; 
+                flex-direction: column; 
+                position: absolute; 
+                top: 100%; 
+                left: 0; 
+                width: 100%; 
+                background: var(--card-bg); 
+                padding: 20px; 
+                text-align: center; 
+                border-bottom: 2px solid var(--magenta); 
+                gap: 20px; 
+            }
             .nav-links.active { display: flex; }
             .hamburger { display: block; }
         }
@@ -63,7 +77,27 @@
 
         /* Right Side: Info */
         .product-info { flex: 1 1 400px; max-width: 600px; }
-        .product-title { font-size: 2.5rem; margin-bottom: 10px; text-transform: uppercase; color: #ff3333; /* Specific Red tint for Deadliest */ } 
+        
+        /* Deadliest Title - RED Color */
+        .product-title { 
+            font-size: 2.5rem; 
+            margin-bottom: 10px; 
+            text-transform: uppercase; 
+            color: #ff3333; 
+        }
+        
+        /* PRICE SELECTOR */
+        .price-selector {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--gold);
+            color: white;
+            padding: 10px;
+            width: 100%;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            cursor: pointer;
+        }
         .product-price { font-size: 2rem; color: var(--price-color); font-weight: 700; margin-bottom: 20px; }
         
         .feature-list { margin-bottom: 30px; }
@@ -86,11 +120,11 @@
         .btn-view-kit:hover { background: var(--magenta); }
 
         .btn-buy {
-            background: linear-gradient(90deg, #00c6ff, #0072ff); color: white; border: none; padding: 12px 40px; border-radius: 8px; font-weight: 600; cursor: pointer; box-shadow: 0 0 15px rgba(0, 114, 255, 0.4); transition: 0.3s;
+            background: linear-gradient(90deg, #00c6ff, #0072ff); color: white; border: none; padding: 12px 40px; border-radius: 8px; font-weight: 600; cursor: pointer; box-shadow: 0 0 15px rgba(0, 114, 255, 0.4); transition: 0.3s; width: 100%;
         }
         .btn-buy:hover { transform: scale(1.05); box-shadow: 0 0 25px rgba(0, 114, 255, 0.6); }
 
-        /* --- MODALS --- */
+        /* --- MODALS (POPUPS) --- */
         .modal {
             display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.9); justify-content: center; align-items: center; padding: 20px;
         }
@@ -122,12 +156,14 @@
                 <i class="fas fa-cube"></i> 
                 <span class="gradient-text">SPICYSMP</span>
             </a>
+            
             <div class="nav-links" id="navLinks">
                 <a href="index.html">Home</a>
-                <a href="store.html" style="color: var(--gold);">Store</a>
+                <a href="rank.html" style="color: var(--gold);">Store</a>
                 <a href="contact.html">Contact</a>
                 <a href="https://discord.gg/3yWnxcUJPN" class="btn-primary">Join Discord</a>
             </div>
+            
             <div class="hamburger" onclick="toggleMenu()"><i class="fas fa-bars"></i></div>
         </div>
     </nav>
@@ -143,13 +179,17 @@
 
         <div class="product-info">
             <h1 class="product-title">Deadliest Rank</h1>
-            <div class="product-price">₹99.00</div>
+            
+            <label style="color: #bbb; display: block; margin-bottom: 5px;">Select Duration:</label>
+            <select class="price-selector" id="priceSelect" onchange="updatePrice()">
+                <option value="80">30 Days - ₹80</option>
+                <option value="100">60 Days - ₹100</option>
+                <option value="120">1 Session - ₹120</option>
+            </select>
+
+            <div class="product-price" id="displayPrice">₹80.00</div>
             
             <div class="feature-list">
-                <div class="feature-item">
-                    <i class="fas fa-clock"></i>
-                    <span><strong>Validity:</strong> 2 Months</span>
-                </div>
                 <div class="feature-item">
                     <i class="fas fa-box-open"></i>
                     <span><strong>Deadliest Kit:</strong> Cool Gear & Abilities</span>
@@ -164,6 +204,7 @@
                 <button class="btn-view-kit" onclick="openModal('kitModal')">
                     <i class="fas fa-search"></i> View Kit Items
                 </button>
+                
                 <button class="btn-buy" onclick="openModal('paymentModal')">
                     Click here to buy
                 </button>
@@ -193,9 +234,14 @@
             
             <img src="qr.jpg" alt="Payment QR Code" class="modal-img" style="width: 250px; height: auto;">
             
+            <p style="font-size: 1.2rem; color: white; margin: 10px 0;">
+                Pay Total: <span id="modalPrice" style="color: var(--gold); font-weight: bold;">₹80</span>
+            </p>
+
             <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px; text-align: left;">
                 <h4 style="color: var(--gold); margin-bottom: 10px;">Steps to Claim:</h4>
                 <ol class="payment-steps" style="padding-left: 20px;">
+                    <li>Scan and pay the exact amount shown above.</li>
                     <li>Take a screenshot of the payment success screen.</li>
                     <li>Join our Discord and create a support ticket.</li>
                     <li>Upload the screenshot in the ticket.</li>
@@ -218,11 +264,22 @@
     </footer>
 
     <script>
+        // 1. Hamburger Menu Logic
         function toggleMenu() {
             const navLinks = document.getElementById('navLinks');
             navLinks.classList.toggle('active');
         }
 
+        // 2. Price Update Logic
+        function updatePrice() {
+            var price = document.getElementById("priceSelect").value;
+            // Update main page price
+            document.getElementById("displayPrice").innerText = "₹" + price + ".00";
+            // Update modal price
+            document.getElementById("modalPrice").innerText = "₹" + price;
+        }
+
+        // 3. Modal Logic
         function openModal(modalId) {
             document.getElementById(modalId).style.display = "flex";
         }
@@ -231,6 +288,7 @@
             document.getElementById(modalId).style.display = "none";
         }
 
+        // Close if clicked outside
         window.onclick = function(event) {
             if (event.target.classList.contains('modal')) {
                 event.target.style.display = "none";
