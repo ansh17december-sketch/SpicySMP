@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Store | SPICYSMP</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <style>
+        /* --- GLOBAL VARIABLES --- */
+        :root {
+            --magenta: #ff00cc;
+            --gold: #ffd700;
+            --dark-bg: #050508;
+            --card-bg: #121216;
+            --text-color: #ffffff;
+            --text-gray: #b3b3b3;
+            --gradient-main: linear-gradient(135deg, var(--magenta), var(--gold));
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        body { background-color: var(--dark-bg); color: var(--text-color); }
+        a { text-decoration: none; color: white; transition: 0.3s; }
+        
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        .gradient-text { background: var(--gradient-main); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 800; }
+
+        /* --- NAVBAR --- */
+        nav { padding: 20px 0; background: rgba(5, 5, 8, 0.95); position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid rgba(255, 215, 0, 0.1); }
+        .nav-container { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.5rem; display: flex; align-items: center; gap: 10px; }
+        .logo i { color: var(--gold); }
+        
+        .nav-links { display: flex; gap: 20px; align-items: center; }
+        .btn-primary { background: var(--gradient-main); color: #000; padding: 8px 20px; border-radius: 8px; font-weight: 600; cursor: pointer; border:none; }
+        
+        .hamburger { display: none; font-size: 1.5rem; color: var(--gold); cursor: pointer; }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; flex-direction: column; position: absolute; top: 100%; left: 0; width: 100%; background: var(--card-bg); padding: 20px; text-align: center; border-bottom: 2px solid var(--magenta); gap: 20px; }
+            .nav-links.active { display: flex; }
+            .hamburger { display: block; }
+        }
+
+        /* --- STORE HEADER & SEARCH --- */
+        .store-header { text-align: center; padding: 60px 0 40px; }
+        .store-header h1 { font-size: 3rem; margin-bottom: 10px; }
+        
+        .search-container {
+            max-width: 600px;
+            margin: 0 auto 30px;
+            position: relative;
+        }
+        
+        .search-input {
+            width: 100%;
+            padding: 15px 20px;
+            padding-left: 50px;
+            border-radius: 50px;
+            border: 1px solid rgba(255,255,255,0.1);
+            background: rgba(255,255,255,0.05);
+            color: white;
+            font-size: 1rem;
+            outline: none;
+            transition: 0.3s;
+        }
+        .search-input:focus { border-color: var(--magenta); box-shadow: 0 0 15px rgba(255, 0, 204, 0.2); }
+        .search-icon { position: absolute; left: 20px; top: 50%; transform: translateY(-50%); color: var(--gold); }
+
+        /* --- FILTERS --- */
+        .filter-container { display: flex; justify-content: center; gap: 15px; margin-bottom: 50px; flex-wrap: wrap; }
+        .filter-btn {
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.2);
+            color: #ccc;
+            padding: 8px 25px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-size: 0.9rem;
+        }
+        .filter-btn:hover, .filter-btn.active {
+            background: var(--gradient-main);
+            color: #000;
+            border-color: transparent;
+            font-weight: 600;
+        }
+
+        /* --- PRODUCT GRID --- */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+            padding-bottom: 80px;
+        }
+
+        .product-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 20px;
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: 0.3s;
+            text-align: center;
+            display: flex; /* Default display */
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .product-card:hover { transform: translateY(-5px); border-color: var(--gold); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+
+        /* Image Placeholder Area */
+        .card-img {
+            height: 150px;
+            border-radius: 10px;
+            background-size: cover;
+            background-position: center;
+            background-color: #222;
+            position: relative;
+        }
+        
+        .card-type {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(0,0,0,0.6);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+        }
+
+        .card-title { font-size: 1.2rem; font-weight: 700; color: white; margin: 0; }
+        .card-price { color: var(--gold); font-size: 1.1rem; font-weight: 600; }
+        .start-at { font-size: 0.8rem; color: #888; font-weight: 400; }
+
+        .btn-buy-card {
+            display: block;
+            width: 100%;
+            background: transparent;
+            border: 1px solid var(--magenta);
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: auto;
+            transition: 0.2s;
+        }
+        .btn-buy-card:hover { background: var(--magenta); color: black; font-weight: bold; }
+
+        /* Footer */
+        footer { background: #000; padding: 40px 0; border-top: 1px solid rgba(255,255,255,0.1); text-align: center; color: #666; font-size: 0.9rem; }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="container nav-container">
+            <a href="index.html" class="logo"><i class="fas fa-cube"></i> <span class="gradient-text">SPICYSMP</span></a>
+            <div class="nav-links" id="navLinks">
+                <a href="index.html">Home</a>
+                <a href="store.html" style="color: var(--gold);">Store</a>
+                <a href="contact.html">Contact</a>
+                <a href="https://discord.gg/3yWnxcUJPN" class="btn-primary">Join Discord</a>
+            </div>
+            <div class="hamburger" onclick="toggleMenu()"><i class="fas fa-bars"></i></div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="store-header">
+            <h1 class="gradient-text">Store</h1>
+            <p style="color: #888;">Browse our collection of premium items</p>
+        </div>
+
+        <div class="search-container">
+            <i class="fas fa-search search-icon"></i>
+            <input type="text" id="searchInput" class="search-input" placeholder="Search for ranks, crates..." onkeyup="filterProducts()">
+        </div>
+
+        <div class="filter-container">
+            <button class="filter-btn active" onclick="setCategory('all', this)">All Categories</button>
+            <button class="filter-btn" onclick="setCategory('rank', this)">Ranks</button>
+            <button class="filter-btn" onclick="setCategory('crate', this)">Crate Keys</button>
+        </div>
+
+        <div class="product-grid" id="productGrid">
+            
+            <div class="product-card" data-category="rank" data-name="pro rank">
+                <div class="card-img" style="background-image: url('pro.jpg');"><span class="card-type">Rank</span></div>
+                <h3 class="card-title">Pro Rank</h3>
+                <div class="card-price"><span class="start-at">Starts at</span> ₹10.00</div>
+                <a href="pro.html" class="btn-buy-card">Buy Now</a>
+            </div>
+
+            <div class="product-card" data-category="rank" data-name="elite rank">
+                <div class="card-img" style="background-image: url('elite.jpg');"><span class="card-type">Rank</span></div>
+                <h3 class="card-title">Elite Rank</h3>
+                <div class="card-price"><span class="start-at">Starts at</span> ₹30.00</div>
+                <a href="elite.html" class="btn-buy-card">Buy Now</a>
+            </div>
+
+            <div class="product-card" data-category="rank" data-name="legend rank">
+                <div class="card-img" style="background-image: url('legend.jpg');"><span class="card-type">Rank</span></div>
+                <h3 class="card-title">Legend Rank</h3>
+                <div class="card-price"><span class="start-at">Starts at</span> ₹50.00</div>
+                <a href="legend.html" class="btn-buy-card">Buy Now</a>
+            </div>
+
+            <div class="product-card" data-category="rank" data-name="deadliest rank">
+                <div class="card-img" style="background-image: url('deadliest.jpg');"><span class="card-type">Rank</span></div>
+                <h3 class="card-title" style="color:#ff3333;">Deadliest Rank</h3>
+                <div class="card-price"><span class="start-at">Starts at</span> ₹80.00</div>
+                <a href="deadliest.html" class="btn-buy-card">Buy Now</a>
+            </div>
+
+            <div class="product-card" data-category="rank" data-name="immortal rank">
+                <div class="card-img" style="background-image: url('immortal.jpg');"><span class="card-type">Rank</span></div>
+                <h3 class="card-title" style="color:var(--gold);">Immortal Rank</h3>
+                <div class="card-price"><span class="start-at">Starts at</span> ₹100.00</div>
+                <a href="immortal.html" class="btn-buy-card">Buy Now</a>
+            </div>
+
+            <div class="product-card" data-category="rank" data-name="supreme rank">
+                <div class="card-img" style="background-image: url('supreme.jpg');"><span class="card-type">Rank</span></div>
+                <h3 class="card-title">Supreme Rank</h3>
+                <div class="card-price"><span class="start-at">Starts at</span> ₹120.00</div>
+                <a href="supreme.html" class="btn-buy-card">Buy Now</a>
+            </div>
+
+            <div class="product-card" data-category="rank" data-name="admin rank">
+                <div class="card-img" style="background-image: url('admin.jpg'); border:1px solid red;"><span class="card-type" style="background:red;">Admin</span></div>
+                <h3 class="card-title" style="color:red;">Admin Rank</h3>
+                <div class="card-price">₹999.00</div>
+                <a href="admin.html" class="btn-buy-card">Buy Now</a>
+            </div>
+
+            <div class="product-card" data-category="crate" data-name="vote key">
+                <div class="card-img" style="background-image: url('vote_key.jpg');"><span class="card-type">Key</span></div>
+                <h3 class="card-title">Vote Key</h3>
+                <div class="card-price" style="color:#00ff00;">FREE</div>
+                <a href="vote_key.html" class="btn-buy-card">Get Now</a>
+            </div>
+
+            <div class="product-card" data-category="crate" data-name="party key">
+                <div class="card-img" style="background-image: url('party_key.jpg');"><span class="card-type">Key</span></div>
+                <h3 class="card-title">Party Key</h3>
+                <div class="card-price" style="color:#00ff00;">FREE</div>
+                <a href="party_key.html" class="btn-buy-card">Get Now</a>
+            </div>
+
+            <div class="product-card" data-category="crate" data-name="banana key">
+                <div class="card-img" style="background-image: url('banana_key.jpg');"><span class="card-type">Key</span></div>
+                <h3 class="card-title">Banana Key (5x)</h3>
+                <div class="card-price">₹20.00</div>
+                <a href="banana_key.html" class="btn-buy-card">Buy Now</a>
+            </div>
+
+            <div class="product-card" data-category="crate" data-name="watermelon key">
+                <div class="card-img" style="background-image: url('watermelon_key.jpg');"><span class="card-type">Key</span></div>
+                <h3 class="card-title">Watermelon Key (5x)</h3>
+                <div class="card-price">₹40.00</div>
+                <a href="watermelon_key.html" class="btn-buy-card">Buy Now</a>
+            </div>
+
+            <div class="product-card" data-category="crate" data-name="berry key">
+                <div class="card-img" style="background-image: url('berry_key.jpg');"><span class="card-type">Key</span></div>
+                <h3 class="card-title">Berry Key (5x)</h3>
+                <div class="card-price">₹80.00</div>
+                <a href="berry_key.html" class="btn-buy-card">Buy Now</a>
+            </div>
+
+            <div class="product-card" data-category="crate" data-name="purple key">
+                <div class="card-img" style="background-image: url('purple_key.jpg');"><span class="card-type">Key</span></div>
+                <h3 class="card-title">Purple Key (5x)</h3>
+                <div class="card-price">₹100.00</div>
+                <a href="purple_key.html" class="btn-buy-card">Buy Now</a>
+            </div>
+
+            <div class="product-card" data-category="crate" data-name="inferno key">
+                <div class="card-img" style="background-image: url('inferno_key.jpg');"><span class="card-type">Key</span></div>
+                <h3 class="card-title">Inferno Key</h3>
+                <div class="card-price">₹100.00</div>
+                <a href="inferno_key.html" class="btn-buy-card">Buy Now</a>
+            </div>
+
+            <div class="product-card" data-category="crate" data-name="lunar key">
+                <div class="card-img" style="background-image: url('lunar_key.jpg');"><span class="card-type">Key</span></div>
+                <h3 class="card-title">Lunar Key</h3>
+                <div class="card-price">₹120.00</div>
+                <a href="lunar_key.html" class="btn-buy-card">Buy Now</a>
+            </div>
+
+            <div class="product-card" data-category="crate" data-name="dragon key">
+                <div class="card-img" style="background-image: url('dragon_key.jpg');"><span class="card-type">Key</span></div>
+                <h3 class="card-title">Little Dragon Key</h3>
+                <div class="card-price">₹140.00</div>
+                <a href="dragon_key.html" class="btn-buy-card">Buy Now</a>
+            </div>
+
+            <div class="product-card" data-category="crate" data-name="fairy key">
+                <div class="card-img" style="background-image: url('fairy_key.jpg');"><span class="card-type">Key</span></div>
+                <h3 class="card-title">Fairy Key</h3>
+                <div class="card-price">₹180.00</div>
+                <a href="fairy_key.html" class="btn-buy-card">Buy Now</a>
+            </div>
+
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            Made with <i class="fas fa-heart" style="color: var(--magenta);"></i> by PagalAWM &copy; 2025 SPICYSMP
+            <br>
+            <small style="color: #444; margin-top: 10px; display: block;">Server IP: play.spicynet.fun</small>
+        </div>
+    </footer>
+
+    <script>
+        // 1. Mobile Menu
+        function toggleMenu() {
+            document.getElementById('navLinks').classList.toggle('active');
+        }
+
+        // 2. Variables for Filtering
+        let currentCategory = 'all';
+
+        // 3. Category Filter Logic
+        function setCategory(category, btnElement) {
+            currentCategory = category;
+            
+            // Update Active Button
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            btnElement.classList.add('active');
+
+            // Trigger Filter
+            filterProducts();
+        }
+
+        // 4. Combined Search & Filter Logic
+        function filterProducts() {
+            const searchValue = document.getElementById('searchInput').value.toLowerCase();
+            const products = document.querySelectorAll('.product-card');
+
+            products.forEach(product => {
+                const name = product.getAttribute('data-name');
+                const category = product.getAttribute('data-category');
+                
+                // Check if it matches search AND category
+                const matchesSearch = name.includes(searchValue);
+                const matchesCategory = (currentCategory === 'all') || (category === currentCategory);
+
+                if (matchesSearch && matchesCategory) {
+                    product.style.display = "flex";
+                } else {
+                    product.style.display = "none";
+                }
+            });
+        }
+    </script>
+
+</body>
+  </html>
+  
